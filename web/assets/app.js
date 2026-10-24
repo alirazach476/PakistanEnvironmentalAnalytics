@@ -34,6 +34,18 @@ const NAV = [
   ["Data", [["quality", "Data Quality & Coverage", "quality"], ["methodology", "Methodology & Sources", "method"]]],
 ];
 const TITLES = Object.fromEntries(NAV.flatMap(([, items]) => items.map(([k, t]) => [k, t])));
+const ICON_OF = Object.fromEntries(NAV.flatMap(([, items]) => items.map(([k, , ic]) => [k, ic])));
+const BLURBS = {
+  explorer: "One place in depth: daily series, monthly heatmap, seasonal profile, flagged outliers and weather context.",
+  compare: "Up to eight places side by side, on the same filters, each keeping its own colour.",
+  trends: "Monthly levels over time and deseasonalised long-term trends per place, with false-discovery-rate control.",
+  seasonal: "How PM2.5 varies by season, month and weekday across Pakistan.",
+  weather: "Associations between PM2.5 and ERA5 temperature, humidity, wind and rain. These are associations, not causes.",
+  distributions: "The shape of daily PM2.5 values by place, province and source.",
+  statistics: "Formal tests on one summary value per place, with effect sizes, assumption checks and sensitivity analysis.",
+  quality: "Coverage, gaps, model-artifact screening and validation logs for every source.",
+  methodology: "Sources, licences, processing rules and limitations.",
+};
 
 function renderNav(active) {
   const qs = location.hash.includes("?") ? "?" + location.hash.split("?")[1] : ""; // keep filters across pages
@@ -138,7 +150,11 @@ function route() {
   const content = document.getElementById("content");
   content.innerHTML = "";
   content.classList.remove("fade-in"); void content.offsetWidth; content.classList.add("fade-in");
-  try { PAGES[page](content); }
+  try {
+    PAGES[page](content);
+    if (BLURBS[page]) content.insertAdjacentHTML("afterbegin", `<div class="page-banner"><div class="pb-ic">${icon(ICON_OF[page])}</div>
+      <div><h1>${TITLES[page]}</h1><p>${BLURBS[page]}</p></div></div>`);
+  }
   catch (e) { console.error(e); content.innerHTML = `<div class="callout warn">This view could not be rendered: ${e.message}</div>`; }
   document.getElementById("sidebar").classList.remove("open");
   rendering = false;

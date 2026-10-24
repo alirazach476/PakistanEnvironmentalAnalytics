@@ -208,7 +208,7 @@ export function statistics(root) {
       ${callout("<b>Significance is not importance.</b> With hundreds of places and years of data, tiny differences reach small p-values. Judge each result by its effect size, confidence interval and the µg/m³ difference it implies.", "warn")}
       <div class="mb">${card("st-eff", "Median within-place correlation with weather (deseasonalised)", "95% bootstrap CI across places")}</div>
       ${section("Test details")}
-      ${T.map((t, i) => `<details class="test" ${i === 0 ? "open" : ""}><summary><span class="pill ${t.justified ? "blue" : "warn"}">${t.justified ? "✓ run" : "⚠ not justified"}</span><span class="st">${esc(t.name)}</span>
+      ${T.map((t, i) => `<details class="test${t.justified ? "" : " not-run"}" ${i === 0 ? "open" : ""}><summary><span class="pill ${t.justified ? "blue" : "warn"}">${t.justified ? "✓ run" : "⚠ not justified"}</span><span class="st">${esc(t.name)}</span>
         <span class="muted small">n = ${t.n}</span><span class="chev">›</span></summary><div class="test-body">
         <dl><dt>Question</dt><dd>${esc(t.question)}</dd><dt>Null hypothesis</dt><dd>${esc(t.null_hypothesis)}</dd><dt>Method</dt><dd>${esc(t.test)}</dd>
           <dt>Unit</dt><dd>${esc(t.unit_of_analysis)}</dd><dt>Assumptions</dt><dd>${t.assumptions.map(esc).join("; ")}</dd></dl>
@@ -228,7 +228,8 @@ export function statistics(root) {
       if (!t.details || !t.details.length) return;
       const keys = Object.keys(t.details[0]).filter((k) => !["city_id"].includes(k)).slice(0, 10);
       const rowsD = t.details.map((r) => ({ ...(r.city_id ? { place: lbl[r.city_id] || r.city_id } : {}), ...r }));
-      const cols = [...(rowsD[0].place ? [{ key: "place", label: "Place" }] : []), ...keys.map((k) => ({ key: k, label: k, num: typeof t.details[0][k] === "number", fmt: (v) => (typeof v === "number" ? (Math.abs(v) < 1e-3 && v !== 0 ? v.toExponential(2) : fmt(v, 3)) : esc(v ?? "—")) }))];
+      const cols = [...(rowsD[0].place ? [{ key: "place", label: "Place" }] : []), ...keys.map((k) => ({ key: k, label: k, num: typeof t.details[0][k] === "number",
+        fmt: /^[pq](_|$)/.test(k) ? fmtP : (v) => (typeof v === "number" ? (Math.abs(v) < 1e-3 && v !== 0 ? v.toExponential(2) : fmt(v, 3)) : esc(v ?? "—")) }))];
       table(`st-det-${i}`, rowsD, cols, { name: `test_${i}_details`, search: rowsD.length > 12 });
     });
     const order = [...wx].reverse();

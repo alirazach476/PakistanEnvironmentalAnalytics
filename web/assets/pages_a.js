@@ -1,7 +1,7 @@
 // Overview, City Explorer, City Comparison, Historical Trends, Seasonal Analysis.
 
 import { annual, citySummaries, cityList, cityValues, D, dayMask, F, monthly, nationalMonthly, pooledBySeason, pooledValues, pm, wx } from "./data.js";
-import { boxStats, fmt, fmtInt, histogram, isNum, mean, quantileSorted, signed, spearman } from "./stats.js";
+import { boxStats, fmt, fmtInt, fmtP, histogram, isNum, mean, pEq, quantileSorted, signed, spearman } from "./stats.js";
 import { cat, colorMap, div, empty, geoLayout, MUTED, plot, seq, sizeFromPop, sparkline, whoLine, whoNote } from "./charts.js";
 import { bindSeg, callout, card, citySelect, esc, kpi, picker, section, seg, table } from "./ui.js";
 
@@ -87,7 +87,7 @@ export function overview(root) {
   </div>
   <div class="grid g-2-1 mb">
     ${card("ov-map", "Median PM2.5 by place", `${SRC} · bubble size = population (log)`)}
-    ${card("ov-rank", "15 highest medians", "dotted line = WHO 24-h guideline · ⚠ hatched = artifact-flagged")}
+    ${card("ov-rank", "15 highest medians", "dotted line = WHO 24-h guideline · ⚠ outlined = artifact-flagged")}
   </div>
   <div class="mb">${card("ov-band", "Monthly PM2.5 across all filtered places", "median place with middle-50% and 5–95% bands · months with ≥ 20 valid days")}</div>
   <div class="grid g2 mb">
@@ -108,11 +108,17 @@ export function overview(root) {
   }], geoLayout(), 460);
   // ranking
   const top = [...sums].sort((a, b) => b.median - a.median).slice(0, 15).reverse();
-  plot("ov-rank", [{
-    type: "bar", orientation: "h", x: top.map((s) => s.median), y: top.map((s) => (s.artifact ? "⚠ " : "") + s.label),
-    marker: { color: cat()[0], cornerradius: 4, pattern: { shape: top.map((s) => (s.artifact ? "/" : "")), fgcolor: "rgba(255,255,255,0.55)", size: 6, solidity: 0.35 } },
-    customdata: top.map((s) => [s.province, s.n]), hovertemplate: "<b>%{y}</b> · %{customdata[0]}<br>Median %{x:.1f} µg/m³<br>%{customdata[1]:,} days<extra></extra>",
-  }], { shapes: [whoLine("x")], xaxis: { title: { text: `Median ${PM}` }, showgrid: true }, margin: { l: 8 } }, 460);
+  // Flagged places get a light fill + solid outline (plus the ⚠ label), so the flag never relies on colour alone.
+  const rankLabel = (s) => (s.artifact ? "⚠ " : "") + s.label;
+  const rankTrace = (rows, name, flagged) => ({
+    type: "bar", orientation: "h", name, x: rows.map((s) => s.median), y: rows.map(rankLabel),
+    text: rows.map((s) => fmt(s.median)), textposition: "outside", cliponaxis: false, textfont: { size: 11 },
+    marker: { color: flagged ? "rgba(42,120,214,0.28)" : cat()[0], cornerradius: 4, line: { color: cat()[0], width: flagged ? 1.5 : 0 } },
+    customdata: rows.map((s) => [s.province, s.n]), hovertemplate: "<b>%{y}</b> · %{customdata[0]}<br>Median %{x:.1f} µg/m³<br>%{customdata[1]:,} days<extra></extra>",
+  });
+  plot("ov-rank", [rankTrace(top.filter((s) => !s.artifact), "Not flagged", false), rankTrace(top.filter((s) => s.artifact), "⚠ Artifact-flagged", true)],
+    { shapes: [whoLine("x")], barmode: "overlay", xaxis: { title: { text: `Median ${PM}` }, showgrid: true },
+      yaxis: { type: "category", categoryorder: "array", categoryarray: top.map(rankLabel) }, margin: { l: 8, r: 36 } }, 460);
   bandChart("ov-band", nat);
   seasonBox("ov-season", pooledBySeason());
   provinceBox("ov-prov", sums);
@@ -239,9 +245,14 @@ export function explorer(root) {
   histChart("ex-hist", vals, false, "city-days");
   const ox = outs.map((d) => D.meta.dates[d]), oy = outs.map((d) => pm(c.idx, d));
   plot("ex-out", [
-    { x, y: vals, mode: "lines", name: "Daily", line: { color: cat()[0], width: 1 }, hovertemplate: "%{x}: %{y:.1f}<extra></extra>" },
+    { x, y: vals, mode: "lines", name: "Daily (context)", line: { color: MUTED(), width: 1 }, hovertemplate: "%{x}: %{y:.1f}<extra></extra>" },
     { x: ox, y: oy, mode: "markers", name: `Flagged (n=${outs.length})`, marker: { size: 9, color: cat()[7], symbol: "circle-open", line: { width: 2 } }, hovertemplate: "%{x}: %{y:.1f} (flagged)<extra></extra>" },
-  ], { yaxis: { title: { text: PM }, rangemode: "tozero" } }, 340);
+  ], {
+    yaxis: { title: { text: PM }, rangemode: "tozero" },
+    annotations: outs.length ? [] : [{ xref: "paper", yref: "paper", x: 0.5, y: 1, yanchor: "top", showarrow: false,
+      text: "No values flagged for this place in the selection", font: { size: 12.5, color: cat()[0] },
+      bgcolor: "rgba(127,127,127,0.08)", borderpad: 6 }],
+  }, 340);
 
   const wxEl = document.getElementById("ex-wx");
   if (!hasWx) {
@@ -255,7 +266,7 @@ export function explorer(root) {
     const pc = D.analysis.per_city_corr[`${S.wxVar}|raw`].find((p) => p.city_id === c.city_id);
     scatterWithBins("ex-wx-c", xs, vals, S.wxVar, idx.map((d) => D.meta.dates[d]));
     document.querySelector("#ex-wx .card-s").innerHTML = `Spearman ρ = <b>${signed(r.r)}</b> on ${fmtInt(r.n)} days in selection (raw daily values)` +
-      (pc ? ` · full period: effective n ≈ ${fmt(pc.n_eff, 0)}, autocorrelation-adjusted p = ${pc.p_value_adjusted_n?.toExponential(1)}` : "");
+      (pc ? ` · full period: effective n ≈ ${fmt(pc.n_eff, 0)}, autocorrelation-adjusted ${pEq(pc.p_value_adjusted_n)}` : "");
   };
   drawWx();
   bindSeg("ex-wxv", (v) => { S.wxVar = v; drawWx(); });
@@ -458,7 +469,7 @@ export function trendsPage(root) {
         { x: xs, y: fit.map((v, i) => v - 1.96 * se[i]), mode: "lines", line: { width: 0 }, fill: "tonexty", fillcolor: "rgba(120,120,120,0.22)", name: "95% CI (Newey–West)", hoverinfo: "skip" },
         { x: xs, y: fit, mode: "lines", name: "Linear trend", line: { color: getComputedStyle(document.documentElement).getPropertyValue("--ink"), width: 2.2 }, hovertemplate: "trend %{y:+.1f}<extra></extra>" }] : []),
     ], { bargap: 0.1, yaxis: { title: { text: "Anomaly vs typical month (µg/m³)" }, zeroline: true }, annotations: [{ xref: "paper", yref: "paper", x: 0, y: 1.08, showarrow: false, xanchor: "left",
-      text: `slope ${signed(t.slope_per_year)} µg/m³/yr (95% CI ${signed(t.ci_low)} to ${signed(t.ci_high)}) · Theil–Sen ${signed(t.theil_sen_slope)} · q = ${t.q_value?.toExponential(1)}${t.artifact ? " · ⚠ " + t.reason : ""}`, font: { size: 11.5 } }],
+      text: `slope ${signed(t.slope_per_year)} µg/m³/yr (95% CI ${signed(t.ci_low)} to ${signed(t.ci_high)}) · Theil–Sen ${signed(t.theil_sen_slope)} · ${pEq(t.q_value, "q")}${t.artifact ? " · ⚠ " + t.reason : ""}`, font: { size: 11.5 } }],
       margin: { t: 34 } }, 400);
   };
   citySelect("tr-one-pick", labels, S.oneTrend, (v) => { S.oneTrend = v; drawOne(); });
@@ -467,7 +478,7 @@ export function trendsPage(root) {
     { key: "mean_level", label: "Mean level", num: true, fmt: (v) => fmt(v) }, { key: "slope_per_year", label: "Slope µg/m³/yr", num: true, fmt: (v) => signed(v) },
     { key: "ci_low", label: "CI low", num: true, fmt: (v) => signed(v) }, { key: "ci_high", label: "CI high", num: true, fmt: (v) => signed(v) },
     { key: "pct_change_per_year", label: "%/yr", num: true, fmt: (v) => signed(v, 1) }, { key: "theil_sen_slope", label: "Theil–Sen", num: true, fmt: (v) => signed(v) },
-    { key: "q_value", label: "q (FDR)", num: true, fmt: (v) => (isNum(v) ? v.toExponential(1) : "—") }, { key: "direction", label: "Direction" }, { key: "reason", label: "Artifact flag" }],
+    { key: "q_value", label: "q (FDR)", num: true, fmt: fmtP }, { key: "direction", label: "Direction" }, { key: "reason", label: "Artifact flag" }],
   { name: "place_trends", sortKey: "slope_per_year", desc: false });
 }
 

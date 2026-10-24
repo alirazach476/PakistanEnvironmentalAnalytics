@@ -83,5 +83,6 @@ export function lag1(a) {
 
 export const fmt = (v, d = 1) => (isNum(v) ? Number(v).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }) : "—");
 export const fmtInt = (v) => (isNum(v) ? Math.round(v).toLocaleString("en-US") : "—");
-export const fmtP = (p) => (!isNum(p) ? "—" : p < 0.001 ? p.toExponential(2) : p.toFixed(3));
+export const fmtP = (p) => (!isNum(p) ? "—" : p < 0.001 ? "< 0.001" : p.toFixed(3));
 export const signed = (v, d = 2) => (isNum(v) ? (v > 0 ? "+" : "") + v.toFixed(d) : "—");
+export const pEq = (p, sym = "p") => (!isNum(p) ? `${sym} = —` : p < 0.001 ? `${sym} < 0.001` : `${sym} = ${p.toFixed(3)}`);
