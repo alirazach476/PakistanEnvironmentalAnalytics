@@ -14,6 +14,7 @@ connection is needed once the dependencies are installed.
 [![Live dashboard](https://img.shields.io/badge/Live%20dashboard-Vercel-000000?logo=vercel)](https://pakistanenvironmentalanalytics.vercel.app)
 
 **Live dashboard:** <https://pakistanenvironmentalanalytics.vercel.app> (static web version, deployed on Vercel)
+
 **Source code:** <https://github.com/alirazach476/PakistanEnvironmentalAnalytics>
 
 ![Web dashboard](docs/screenshots/web/01_overview.png)
