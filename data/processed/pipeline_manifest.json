@@ -1,0 +1,93 @@
+{
+  "generated_utc": "2026-10-24T19:56:35+00:00",
+  "inputs": {
+    "wb_pm25": {
+      "file": "data\\raw\\worldbank_pm25\\worldbank_pm25_pakistan_subset.parquet",
+      "rows": 948183,
+      "sha256": "556ff438c85901dd5445d4afd0597419c860a1b7a117b7c6841a493f0e50382d",
+      "archive_sha256": "df4fe7de6bbb2ee3fb98405d046eeeead1022283c63a3a88021f1be163c91212"
+    },
+    "hf_aq": {
+      "file": "data\\raw\\hf_pakistan_aq\\pakistan_air_quality_final_clean.csv",
+      "rows": 21840,
+      "sha256": "36ff8cbcd23830116cd834366d2b8447dfdac49489c1543fe38ae3751e7b1529"
+    },
+    "openmeteo_era5": {
+      "dir": "data\\raw\\openmeteo_weather",
+      "cities": 22,
+      "model": "era5",
+      "timezone": "Asia/Karachi"
+    }
+  },
+  "sources": {
+    "wb_pm25": {
+      "name": "World Bank \u2014 Daily City-Level PM2.5 Estimates 2018\u20132026 (Global PM2.5 Watch)",
+      "short": "World Bank PM2.5 (modelled)",
+      "url": "https://datacatalog.worldbank.org/search/dataset/0067162/daily-city-level-air-pollution-pm2-5-estimates-2018-2026",
+      "file_url": "https://datacatalogfiles.worldbank.org/ddh-published/0067162/DR0096340/PM25_Middle_East_North_Africa_Afghanistan_Pakistan.zip",
+      "license": "CC BY-SA 4.0",
+      "value_type": "modelled",
+      "resolution": "daily",
+      "description": "Machine-learning estimates combining IQAir monitors, TROPOMI satellite data, ERA5 reanalysis, EDGAR emissions and geographic covariates."
+    },
+    "hf_aq": {
+      "name": "Pakistan Air Quality & Weather (10 Cities) \u2014 Kaggle dataset mirrored on Hugging Face",
+      "short": "Kaggle/HF hourly AQ (modelled, probable CAMS)",
+      "url": "https://huggingface.co/datasets/jason1966/ahsanneural_pakistan-air-quality-and-weather-10-cities",
+      "file_url": "https://huggingface.co/datasets/jason1966/ahsanneural_pakistan-air-quality-and-weather-10-cities/resolve/main/pakistan_air_quality_final_clean.csv",
+      "license": "Unknown (not stated by uploader)",
+      "value_type": "modelled",
+      "resolution": "hourly",
+      "description": "Hourly pollutants and weather for 10 cities. Provenance is undocumented; variable names match the Open-Meteo Air Quality API (CAMS model), so values are treated as modelled."
+    },
+    "openmeteo_era5": {
+      "name": "Open-Meteo Historical Weather API (ERA5 reanalysis)",
+      "short": "Open-Meteo ERA5 weather (reanalysis)",
+      "url": "https://open-meteo.com/en/docs/historical-weather-api",
+      "file_url": "https://archive-api.open-meteo.com/v1/archive",
+      "license": "CC BY 4.0 (Open-Meteo API data); ERA5 from Copernicus C3S",
+      "value_type": "modelled",
+      "resolution": "daily",
+      "description": "ERA5 0.25\u00b0 reanalysis daily aggregates, local day (Asia/Karachi), fetched once and stored locally."
+    }
+  },
+  "outputs": {
+    "wb_daily": {
+      "rows": 948183,
+      "cities": 339,
+      "date_min": "2018-10-01",
+      "date_max": "2026-08-30"
+    },
+    "hf_hourly": {
+      "rows": 21840,
+      "cities": 10
+    },
+    "hf_daily": {
+      "rows": 910
+    },
+    "weather_daily": {
+      "rows": 63602,
+      "cities": 22
+    },
+    "wb_weather_daily": {
+      "rows": 61534
+    },
+    "source_overlap": {
+      "rows": 880
+    }
+  },
+  "adm1_anchor_check": {
+    "PAK002": true,
+    "PAK003": true,
+    "PAK005": true,
+    "PAK006": true,
+    "PAK007": true
+  },
+  "rules": {
+    "min_hours_per_day": 18,
+    "min_days_per_month": 20,
+    "min_months_per_year": 11,
+    "outlier_robust_z": 3.5,
+    "overlap_max_km": 25.0
+  }
+}

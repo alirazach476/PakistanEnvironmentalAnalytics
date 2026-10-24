@@ -1,0 +1,9 @@
+scenario,rows,rows_removed_pct,cities,overall_median,overall_mean,median_of_city_medians,top_city,top10_overlap_with_baseline,rank_spearman_vs_baseline
+Baseline (all retained data),948183,0.0000,339,59.3820,68.3648,62.6803,Larkana,10,1.0000
+Exclude flagged outliers,947400,0.0826,339,59.3717,68.3634,62.6803,Larkana,10,1.0000
+Winsorise at 1st/99th percentile,948183,0.0000,339,59.3820,67.9997,62.6803,Larkana,10,1.0000
+Complete calendar years only,838347,11.5838,339,60.4996,69.5318,63.9426,Larkana,10,0.9992
+Last 3 complete years only,359340,62.1023,339,57.8272,63.8663,60.8645,Rahim Yar Khan,5,0.9477
+Drop winter months (Dec–Feb),711561,24.9553,339,57.0867,64.8444,59.2827,Larkana,9,0.9949
+One place per identical model series,906228,4.4248,324,58.7796,67.8038,61.7324,Larkana,8,1.0000
+Exclude model-artifact-flagged places,634919,33.0383,227,53.8059,59.1271,57.6796,Khurarianwala,0,1.0000

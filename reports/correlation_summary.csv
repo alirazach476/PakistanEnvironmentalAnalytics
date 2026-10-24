@@ -1,0 +1,13 @@
+x,y,method,deseasonalized,n_cities,median_r,min_r,max_r,n_obs_total,n_significant_fdr,n_positive,n_negative
+temperature,pm25,spearman,False,22,-0.1642,-0.5196,-0.0200,61534,14,0,22
+temperature,pm25,spearman,True,22,0.2060,-0.0534,0.3069,61534,18,20,2
+humidity,pm25,spearman,False,22,-0.1968,-0.5200,0.0805,61534,19,2,20
+humidity,pm25,spearman,True,22,-0.2813,-0.4269,-0.0903,61534,22,0,22
+wind_speed,pm25,spearman,False,22,-0.3261,-0.4583,0.4465,61534,21,1,21
+wind_speed,pm25,spearman,True,22,-0.2512,-0.3465,0.1752,61534,21,1,21
+precipitation,pm25,spearman,False,22,-0.4609,-0.5271,-0.3199,61534,22,0,22
+precipitation,pm25,spearman,True,22,-0.2587,-0.3270,-0.1349,61534,22,0,22
+pressure,pm25,spearman,False,22,0.2662,0.0813,0.5231,61534,22,22,0
+pressure,pm25,spearman,True,22,-0.0213,-0.1289,0.1149,61534,6,8,14
+dew_point,pm25,spearman,False,22,-0.3385,-0.6450,-0.1525,61534,22,0,22
+dew_point,pm25,spearman,True,22,-0.1390,-0.3856,-0.0664,61534,22,0,22

@@ -1,0 +1,81 @@
+scenario,city_label,rank
+Baseline (all retained data),Larkana,1.0000
+Baseline (all retained data),Rahim Yar Khan,2.0000
+Baseline (all retained data),Multan,3.0000
+Baseline (all retained data),Hingorja,4.0000
+Baseline (all retained data),Setharja Old,4.0000
+Baseline (all retained data),Gambat,6.0000
+Baseline (all retained data),Rohri,7.0000
+Baseline (all retained data),Sukkur,7.0000
+Baseline (all retained data),Naudero,9.0000
+Baseline (all retained data),Ghotki,10.0000
+Exclude flagged outliers,Larkana,1.0000
+Exclude flagged outliers,Rahim Yar Khan,2.0000
+Exclude flagged outliers,Multan,3.0000
+Exclude flagged outliers,Hingorja,4.0000
+Exclude flagged outliers,Setharja Old,4.0000
+Exclude flagged outliers,Gambat,6.0000
+Exclude flagged outliers,Rohri,7.0000
+Exclude flagged outliers,Sukkur,7.0000
+Exclude flagged outliers,Naudero,9.0000
+Exclude flagged outliers,Ghotki,10.0000
+Winsorise at 1st/99th percentile,Larkana,1.0000
+Winsorise at 1st/99th percentile,Rahim Yar Khan,2.0000
+Winsorise at 1st/99th percentile,Multan,3.0000
+Winsorise at 1st/99th percentile,Hingorja,4.0000
+Winsorise at 1st/99th percentile,Setharja Old,4.0000
+Winsorise at 1st/99th percentile,Gambat,6.0000
+Winsorise at 1st/99th percentile,Rohri,7.0000
+Winsorise at 1st/99th percentile,Sukkur,7.0000
+Winsorise at 1st/99th percentile,Naudero,9.0000
+Winsorise at 1st/99th percentile,Ghotki,10.0000
+Complete calendar years only,Larkana,1.0000
+Complete calendar years only,Rahim Yar Khan,2.0000
+Complete calendar years only,Multan,3.0000
+Complete calendar years only,Hingorja,6.0000
+Complete calendar years only,Setharja Old,6.0000
+Complete calendar years only,Gambat,8.0000
+Complete calendar years only,Rohri,4.0000
+Complete calendar years only,Sukkur,4.0000
+Complete calendar years only,Naudero,9.0000
+Complete calendar years only,Ghotki,10.0000
+Last 3 complete years only,Larkana,4.0000
+Last 3 complete years only,Rahim Yar Khan,1.0000
+Last 3 complete years only,Multan,10.0000
+Last 3 complete years only,Hingorja,11.0000
+Last 3 complete years only,Setharja Old,11.0000
+Last 3 complete years only,Gambat,15.0000
+Last 3 complete years only,Rohri,2.0000
+Last 3 complete years only,Sukkur,2.0000
+Last 3 complete years only,Naudero,25.0000
+Last 3 complete years only,Ghotki,26.0000
+Drop winter months (Dec–Feb),Larkana,1.0000
+Drop winter months (Dec–Feb),Rahim Yar Khan,3.0000
+Drop winter months (Dec–Feb),Multan,2.0000
+Drop winter months (Dec–Feb),Hingorja,6.0000
+Drop winter months (Dec–Feb),Setharja Old,6.0000
+Drop winter months (Dec–Feb),Gambat,9.0000
+Drop winter months (Dec–Feb),Rohri,4.0000
+Drop winter months (Dec–Feb),Sukkur,4.0000
+Drop winter months (Dec–Feb),Naudero,8.0000
+Drop winter months (Dec–Feb),Ghotki,20.0000
+One place per identical model series,Larkana,1.0000
+One place per identical model series,Rahim Yar Khan,2.0000
+One place per identical model series,Multan,3.0000
+One place per identical model series,Hingorja,
+One place per identical model series,Setharja Old,4.0000
+One place per identical model series,Gambat,5.0000
+One place per identical model series,Rohri,
+One place per identical model series,Sukkur,6.0000
+One place per identical model series,Naudero,7.0000
+One place per identical model series,Ghotki,8.0000
+Exclude model-artifact-flagged places,Larkana,
+Exclude model-artifact-flagged places,Rahim Yar Khan,
+Exclude model-artifact-flagged places,Multan,
+Exclude model-artifact-flagged places,Hingorja,
+Exclude model-artifact-flagged places,Setharja Old,
+Exclude model-artifact-flagged places,Gambat,
+Exclude model-artifact-flagged places,Rohri,
+Exclude model-artifact-flagged places,Sukkur,
+Exclude model-artifact-flagged places,Naudero,
+Exclude model-artifact-flagged places,Ghotki,

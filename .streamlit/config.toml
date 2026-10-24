@@ -1,0 +1,28 @@
+[theme]
+base = "light"
+primaryColor = "#2a78d6"
+backgroundColor = "#f4f6f9"
+secondaryBackgroundColor = "#eef1f5"
+textColor = "#0f172a"
+font = "Inter, system-ui, sans-serif"
+headingFont = "Inter, system-ui, sans-serif"
+baseRadius = "0.75rem"
+borderColor = "#e3e7ee"
+showSidebarBorder = false
+
+[theme.sidebar]
+backgroundColor = "#0b1324"
+secondaryBackgroundColor = "#16213a"
+textColor = "#c9d3e6"
+primaryColor = "#4d9bf0"
+borderColor = "#22304d"
+
+[server]
+headless = true
+runOnSave = false
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"

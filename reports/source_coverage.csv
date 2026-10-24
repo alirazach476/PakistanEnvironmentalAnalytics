@@ -1,0 +1,4 @@
+source_id,source,value_type,resolution,license,cities,start,end,rows
+wb_pm25,World Bank PM2.5 (modelled),modelled,daily,CC BY-SA 4.0,339,2018-10-01,2026-08-30,948183
+hf_aq,"Kaggle/HF hourly AQ (modelled, probable CAMS)",modelled,hourly,Unknown (not stated by uploader),10,2025-11-06,2026-02-04,21840
+openmeteo_era5,Open-Meteo ERA5 weather (reanalysis),modelled,daily,CC BY 4.0 (Open-Meteo API data); ERA5 from Copernicus C3S,22,2018-10-01,2026-08-30,63602

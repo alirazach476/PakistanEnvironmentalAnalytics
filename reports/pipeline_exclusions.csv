@@ -1,0 +1,12 @@
+source_id,step,rule,column,n_rows,action,example
+wb_pm25,identity_check,place name shared/near-identical across different GeoNames IDs,city,8,flagged (kept); labels disambiguated,"Sahiwal (31.97°N, 72.33°E), Sahiwal (30.67°N, 73.1°E), Bahawalnagar (30.0°N, 73.25°E), Arifwala, Alipur (Islamabad Capital Territory), Alipur (Punjab)"
+wb_pm25,summary,rows retained after cleaning,,948183,"retained 948,183 of 948,183",
+wb_pm25,outlier_flag,robust |z| > 3.5 on log(PM2.5) within city,pm25,783,flagged (kept),
+wb_pm25,identity_check,identical daily PM2.5 series shared by several places (same model grid cell),pm25,29,flagged (kept); inferential tests use one representative per series,"Zaida, Tordher, Swabi, Sukkur, Sinjhoro, Sarai Alamgir"
+wb_pm25,model_artifact_screen,abrupt level shift,pm25,101,city flagged (kept); optional exclusion filter,"Chuhar Jamali, Pir Jo Goth, Khairpur Mir's, Zahir Pir, Washuk"
+wb_pm25,model_artifact_screen,fixed annual mean across years,pm25,6,city flagged (kept); optional exclusion filter,"Sialkot, Mustafabad, Hadali, Dipalpur, Chunian"
+wb_pm25,model_artifact_screen,fixed annual mean + abrupt level shift,pm25,5,city flagged (kept); optional exclusion filter,"Sukkur, Rohri, Rahim Yar Khan, Multan, Mirpur Khas"
+hf_aq,transformation,source-derived calendar/AQI columns dropped; calendar fields are recomputed from timestamp and AQI categories are not used,"date,hour,day_of_week,month,month_name,year,is_weekend,season,aqi_category",21840,columns removed,
+hf_aq,summary,rows retained after cleaning,,21840,"retained 21,840 of 21,840",
+hf_aq,aggregation,hourly->daily requires >= 18 valid hours,,0,no days affected,
+openmeteo_era5,summary,rows retained after cleaning,,63602,22 cities,

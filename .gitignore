@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+*.egg-info/
+
+# Large raw archive (re-downloadable; see docs/data_sources.md).
+# The extracted Pakistan subset, the Kaggle/HF CSV, ERA5 JSON and all processed
+# tables are small enough to commit so the app runs without any download.
+data/raw/worldbank_pm25/*.zip
+*.tmp
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Streamlit secrets (none are needed)
+.streamlit/secrets.toml
+
+# Vercel CLI link + token (never commit)
+.vercel/
+web/.vercel/
+.env.local
+web/.env.local
