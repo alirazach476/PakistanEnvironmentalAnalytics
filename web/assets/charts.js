@@ -3,12 +3,12 @@
 
 import { D } from "./data.js";
 
-const CAT_LIGHT = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"];
-const CAT_DARK = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"];
-export const SEQ = [[0, "#cde2fb"], [0.17, "#9ec5f4"], [0.33, "#6da7ec"], [0.5, "#3987e5"], [0.67, "#256abf"], [0.83, "#184f95"], [1, "#0d366b"]];
-export const SEQ_DARK = [[0, "#1d2a40"], [0.2, "#184f95"], [0.4, "#256abf"], [0.6, "#3987e5"], [0.8, "#86b6ef"], [1, "#cde2fb"]];
-export const DIV = [[0, "#184f95"], [0.25, "#6da7ec"], [0.5, "#e9eaee"], [0.75, "#ec8a89"], [1, "#b42828"]];
-export const DIV_DARK = [[0, "#3987e5"], [0.25, "#24466f"], [0.5, "#2b3446"], [0.75, "#7a3434"], [1, "#e66767"]];
+const CAT_LIGHT = ["#0d9f6e", "#eb6834", "#1a8fbf", "#c4891a", "#e87ba4", "#087a54", "#2a7a6e", "#e34948"];
+const CAT_DARK = ["#2ecf97", "#d95926", "#3db4d9", "#e0b34a", "#d55181", "#1fb38a", "#4db89a", "#e66767"];
+export const SEQ = [[0, "#d6f3e9"], [0.17, "#9edfc8"], [0.33, "#55c49a"], [0.5, "#0d9f6e"], [0.67, "#087a54"], [0.83, "#065c41"], [1, "#043d2d"]];
+export const SEQ_DARK = [[0, "#0e2a22"], [0.2, "#065c41"], [0.4, "#087a54"], [0.6, "#0d9f6e"], [0.8, "#55c49a"], [1, "#d6f3e9"]];
+export const DIV = [[0, "#0b6b55"], [0.25, "#55c49a"], [0.5, "#eef4f1"], [0.75, "#ec8a89"], [1, "#b42828"]];
+export const DIV_DARK = [[0, "#2ecf97"], [0.25, "#1a4a3c"], [0.5, "#1c2e28"], [0.75, "#7a3434"], [1, "#e66767"]];
 
 export const isDark = () => document.documentElement.dataset.theme === "dark" ||
   (!document.documentElement.dataset.theme && matchMedia("(prefers-color-scheme: dark)").matches);
@@ -16,7 +16,7 @@ const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v
 export const cat = () => (isDark() ? CAT_DARK : CAT_LIGHT);
 export const seq = () => (isDark() ? SEQ_DARK : SEQ);
 export const div = () => (isDark() ? DIV_DARK : DIV);
-export const MUTED = () => (isDark() ? "#3a4459" : "#c3c8d2");
+export const MUTED = () => (isDark() ? "#355449" : "#b7c9c0");
 
 export function colorMap(keys) {
   const c = cat(), m = {};
@@ -82,8 +82,8 @@ export function geoLayout(extra = {}) {
     margin: { l: 0, r: 0, t: 0, b: 0 },
     geo: {
       projection: { type: "mercator" }, lataxis: { range: [23.4, 37.4] }, lonaxis: { range: [60.6, 77.8] },
-      showcountries: true, countrycolor: dark ? "#3c475c" : "#b8bdc7", showcoastlines: true, coastlinecolor: dark ? "#3c475c" : "#c3c8d2",
-      showland: true, landcolor: dark ? "#182033" : "#eef0f3", showocean: true, oceancolor: dark ? "#0f1a2c" : "#e3eef9",
+      showcountries: true, countrycolor: dark ? "#355449" : "#b7c9c0", showcoastlines: true, coastlinecolor: dark ? "#355449" : "#b7c9c0",
+      showland: true, landcolor: dark ? "#122a24" : "#eef6f3", showocean: true, oceancolor: dark ? "#0a1f1c" : "#dff0ea",
       bgcolor: "rgba(0,0,0,0)", resolution: 50, showlakes: false, showframe: false,
     },
     ...extra,

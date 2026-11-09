@@ -55,8 +55,11 @@ export function overview(root) {
 
   root.innerHTML = `
   <div class="hero">
-    <span class="pill dot">Modelled estimates · not monitor readings</span>
-    <h1 style="margin-top:12px">Air quality across ${sums.length} places in Pakistan, ${D.meta.dates[F.start].slice(0, 4)}–${D.meta.dates[F.end].slice(0, 4)}</h1>
+    <div class="hero-brand">
+      <img class="hero-logo" src="assets/logo.svg" width="64" height="64" alt="">
+      <span class="pill dot">Modelled estimates · not monitor readings</span>
+    </div>
+    <h1 style="margin-top:14px">Air quality across ${sums.length} places in Pakistan, ${D.meta.dates[F.start].slice(0, 4)}–${D.meta.dates[F.end].slice(0, 4)}</h1>
     <p>Daily PM2.5, weather and statistics computed live from World Bank, Open-Meteo ERA5 and Kaggle datasets. Every number reflects the filters above.</p>
     <div class="hero-stats">
       <div class="hero-stat"><div class="v">${fmtInt(pooled.length)}</div><div class="l">City-days</div></div>
